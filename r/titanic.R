@@ -28,7 +28,7 @@ titanic   = read.csv("N:\\Uni_Bigdata\\titanic.csv", quote = '"', sep = ',')
 
 #Gender
 bc1 = ggplot(titanic, aes(x = Sex)) + 
-  geom_bar() + 
+  geom_bar(fill='red') + 
   labs(title = "Gender barplot", x = "gender")
 bc1
 
@@ -55,19 +55,20 @@ bc3
 sum(is.na(titanic$Age)) #a few NAs here ...
 # Remove them via subset fx
 hg1 = ggplot(subset(titanic,!is.na(titanic$Age)), aes(x = Age), ) + 
-  geom_histogram(binwidth = 5) + 
+  geom_histogram(binwidth = 5, fill = "steelblue") + 
   labs(title = "Age histogram")
 hg1
 
 #Age per Ticketclass 
-bp1 = ggplot(subset(titanic,!is.na(titanic$Age)), aes(x = Age, y = Pclass, group =Pclass)) + 
+bp1 = ggplot(subset(titanic,!is.na(titanic$Age)), aes(x = Age, y = as.factor(Pclass), group =Pclass)) + 
   geom_boxplot() + 
   labs(title = "Age/Ticketclass Boxplot", y = "Ticketclass")
 bp1
 
 #Age per Survival
 bp2 = ggplot(subset(titanic,!is.na(titanic$Age)), aes(x = Age, y = Survived, group =Survived)) + 
-  geom_boxplot() + labs(title = "Age/Survival Boxplot", y = "Survival") + 
+  geom_boxplot(fill="steelblue") + 
+  labs(title = "Age/Survival Boxplot", y = "Survival") + 
   scale_y_continuous(breaks = 0:1, labels = c("no", "yes"))
 bp2
 
@@ -95,7 +96,6 @@ table(ifelse(titanic$Fare > 0,"Paid","Didn't Pay"))[c("Paid","Didn't Pay")]
 
 #Histogram family size / Ticketclass
 hgx = ggplot(titanic, aes(x=SibSp, fill=as.factor(Pclass))) +
-  # Alpha to make lines a bit visible, binwidth for x scale
   geom_histogram(alpha = 0.9, binwidth = 1) + 
   labs(title= "Scatterplot Family Size/Ticketclass", x = "Family Size", fill = "Ticketclass") +
   scale_x_continuous(breaks = c(0:8)) +
